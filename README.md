@@ -2,7 +2,7 @@
 There has been a known issue with `AppDelegate` being taken by Capacitor for Cordova compatibility. Currently there is a simple workaround, and that is to simply use a different name in your own project. Recently it was mentioned that there may be a potential solution for this by marking `AppDelegate` as private.
 
 This project is a sample to test out that theory with.
-It was created using the Ionic CLI and the blank starter template and then modified to define it's own obj-c `AppDelegate` in order to create the naming conflict issue.
+It was created using the Ionic CLI and the blank starter template in order to replicate this issue using the development process that the large majority of the Capacitor community follows. It was then modified to define it's own obj-c `AppDelegate` in order to create the naming conflict issue.
 
 A Cordova plugin that relies on `AppDelegate` ([cordova-plugin-app-event](https://github.com/katzer/cordova-plugin-app-event)) is included as a smoke test to see if these changes break the Cordova compatibility in Capacitor. This plugin did have some compilation issues in Xcode unrelated to this test, so there are directions to comment out the offending code.
 
@@ -48,10 +48,10 @@ The instructions below will guide you to make the necessary changes locally to m
     ```
     
 3. Modify the Capacitor `node_modules`
-    1. Create a new folder `node_modules/@capacitor/ios/CapacitorCordova/Classes/Private`
-    2. Move `node_modules/@capacitor/ios/CapacitorCordova/Classes/Public/AppDelegate.h` into the new `Private` folder
-    3. Move `node_modules/@capacitor/ios/CapacitorCordova/Classes/Public/AppDelegate.m` into the new `Private` folder
-    4. Comment out the `<Cordova/AppDelegate.h>` import in `node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova.h`
+    1. Create a new folder `node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Private`
+    2. Move `node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/AppDelegate.h` into the new `Private` folder
+    3. Move `node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/AppDelegate.m` into the new `Private` folder
+    4. Comment out the `<Cordova/AppDelegate.h>` import in `node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/CapacitorCordova.h`
     5. Add the following to `node_modules/@capacitor/ios/CapacitorCordova.podspec`:
     ```
     s.private_header_files = "#{prefix}CapacitorCordova/CapacitorCordova/Classes/Private/*.h"
